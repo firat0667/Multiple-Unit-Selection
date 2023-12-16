@@ -5,6 +5,8 @@ public class UnitClick : MonoBehaviour
 {
     // Start is called before the first frame update
     private Camera _camera;
+    public GameObject GroundMarker;
+
     public LayerMask Clickable;
     public LayerMask Ground;
     void Start()
@@ -36,6 +38,17 @@ public class UnitClick : MonoBehaviour
                 {
                     UnitSelections.Instance.DeSelectAll();
                 }
+            }
+        }
+        if(Input.GetMouseButtonDown(1))
+        {
+            RaycastHit raycastHit;
+            Ray ray =_camera.ScreenPointToRay(Input.mousePosition);
+            if(Physics.Raycast(ray,out raycastHit, Mathf.Infinity, Ground))
+            {
+                GroundMarker.transform.position = raycastHit.point;
+                GroundMarker.SetActive(false);
+                GroundMarker.SetActive(true);
             }
         }
     }
